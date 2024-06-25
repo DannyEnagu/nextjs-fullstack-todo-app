@@ -1,13 +1,9 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import TasksBoard from "@/components/TasksBoard";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 border border-red-500">
-      <div>Hello World.
-
-        <Button>Click me</Button>
-      </div>
-    </main>
+    <main className="flex min-h-screen flex-col items-center justify-between pt-8 md:pt-20">
+      <TasksBoard />
+    </main> 
   );
 }

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .active {
+    @apply bg-[#d3dee3] text-[#7a8aa3] dark:bg-neutral-800 hover:bg-[#d3dee3];
+  }
+}
