@@ -19,13 +19,12 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
             setFilteredTasks(filteredTasks.map((task, i) => {
                 if (task.id === id && property === 'isCompleted') {
                     task[property] = !task[property];
-                    console.log(task);
                 } else if (task.id === id && property === 'isStarred') {
                     task[property] = !task[property];
                 }
                 return task;
             }));
-    }
+        }
     };
 
     useEffect(() => {
@@ -33,6 +32,7 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
             if (filter === 'all') return true;
             if (filter === 'completed') return task.isCompleted;
             if (filter === 'starred') return task.isStarred;
+            
             return false;
         }));
     }, [tasks, filter]);
