@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lexend_Deca } from "next/font/google";
 import "@/styles/globals.css";
+import App from "next/app";
+import AppContextProvider from "@/lib/AppContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const lexendDeca = Lexend_Deca({
+  subsets: ['latin'],
+  weight: ['200', '400', '500', '600', '700']
+}) 
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        {children}
-      </body>
-    </html>
+    <AppContextProvider>
+      <html lang="en">
+        <body className={`${lexendDeca.className} dark:bg-[#121215] bg-slate-100 text-[#84849d]`}>
+          {children}
+        </body>
+      </html>
+    </AppContextProvider>
   );
 }
