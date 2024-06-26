@@ -1,14 +1,18 @@
 'use client'
-import { MouseEvent} from "react";
+import { MouseEvent, useContext} from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { AppContext } from "@/lib/AppContext";
+import { Filters } from "@/lib/types";
 
 interface FilterButtonProps {
     children: React.ReactNode;
-    filter: string;
+    filter: Filters;
 }
 
 export default function TasksFilter({children, filter }: FilterButtonProps) {
+    const { closeMenu, changeFilter } = useContext(AppContext);
+
     const toggleActiveState = (e: MouseEvent<HTMLButtonElement>) => {
         const filters = document.querySelectorAll('[data-filter]');
         filters.forEach((btn, i) => {
@@ -18,6 +22,8 @@ export default function TasksFilter({children, filter }: FilterButtonProps) {
                 btn.classList.remove('active')
             }
         });
+        changeFilter(filter);
+        closeMenu();
     };
     return (
         <Button
