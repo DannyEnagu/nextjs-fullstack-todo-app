@@ -19,13 +19,12 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
             setFilteredTasks(filteredTasks.map((task, i) => {
                 if (task.id === id && property === 'isCompleted') {
                     task[property] = !task[property];
-                    console.log(task);
                 } else if (task.id === id && property === 'isStarred') {
                     task[property] = !task[property];
                 }
                 return task;
             }));
-    }
+        }
     };
 
     useEffect(() => {
@@ -33,6 +32,7 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
             if (filter === 'all') return true;
             if (filter === 'completed') return task.isCompleted;
             if (filter === 'starred') return task.isStarred;
+            
             return false;
         }));
     }, [tasks, filter]);
@@ -55,9 +55,11 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
                 <h2 className="flex justify-between items-center text-rose-400 dark:text-indigo-500 font-bold text-lg mb-4">
                     <span>Tasks</span>
                 </h2>
-                <ul className="max-h-96 overflow-auto">
-                    {tasksList}
-                </ul>
+                {tasksList.length === 0 && <p className="text-gray-500 text-center">No tasks found</p>}
+                {tasksList.length > 0 && <ul className="max-h-96 overflow-auto">
+                        {tasksList}
+                    </ul>
+                }
                 <AddForm />
             </div>
         </section>

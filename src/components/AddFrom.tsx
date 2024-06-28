@@ -3,7 +3,7 @@ import { Loader } from 'lucide-react';
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { useState } from "react";
-import { createTask } from "@/lib/actions";
+import { createTask, userSession } from "@/lib/actions";
 
 
 export default function AddForm() {
@@ -13,7 +13,8 @@ export default function AddForm() {
         setAdding(true);
         const title = formDate.get('title');
         if (title !== '') {
-            await createTask({ title: title as string });
+            const session = await userSession(); 
+            await createTask({ title: title as string, userId: session?.user?.id as string});
             formDate.set('title', '');
             setTitle('');
             setAdding(false);

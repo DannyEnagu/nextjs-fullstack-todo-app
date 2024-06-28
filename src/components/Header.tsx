@@ -4,8 +4,11 @@ import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 import { AppContext } from "@/lib/AppContext";
 import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
+
 
 export default function Header () {
+    const pathname = usePathname();
     const {isMenuOpen, toggleMenu} = useContext(AppContext);
     const openOrCloseMenu = () => toggleMenu();
     return (
@@ -14,7 +17,7 @@ export default function Header () {
                 <span>to</span>
                 <span className="text-rose-400 dark:text-indigo-500">do.</span>
             </div>
-            <div className="md:hidden">
+            <div className={`md:hidden ${pathname === '/auth' ? 'hidden': ''}`}>
                 <Button
                     variant='ghost'
                     className="text-rose-400 dark:text-indigo-500 text-3xl"

@@ -1,9 +1,14 @@
 import prisma from "@/lib/prisma";
-// import { Filters, Task } from "./types";
+import { userSession } from "./actions";
 
 export const getAllTasks = async () => {
+    const session = await userSession();
+    if (!session?.user?.id) return;
     try {
         const newestTasks = await prisma.todo.findMany({
+            where: {
+              userId: session.user.id
+            },
             orderBy: {
               createdAt: 'desc'
             },
@@ -11,6 +16,7 @@ export const getAllTasks = async () => {
         });
         const completedTasks = await prisma.todo.findMany({
             where: {
+              userId: session.user.id,
               isCompleted: true,
               id: {
                 not: newestTasks[0].id
@@ -23,6 +29,7 @@ export const getAllTasks = async () => {
           
           const starredInCompleteTasks = await prisma.todo.findMany({
             where: {
+              userId: session.user.id,
               isCompleted: false,
               isStarred: true,
               id: {
@@ -36,6 +43,7 @@ export const getAllTasks = async () => {
           
           const otherIncompleteTasks = await prisma.todo.findMany({
             where: {
+              userId: session.user.id,
               isCompleted: false,
               isStarred: false,
               id: {
@@ -53,6 +61,6 @@ export const getAllTasks = async () => {
             ...completedTasks
         ];
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
 }
