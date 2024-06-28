@@ -26,12 +26,13 @@ export default function AuthForm() {
         const password = formData.get('password');
         const res = await authenticateUser(authType,{ email, password });
         setAuthResponse(prev => ({ ...prev, ...res }));
-        setIsLoading(false);
     }
 
     useEffect(() => {
         if (authResponse?.isSuccess) {
             redirect('/');
+        } else {
+            setIsLoading(false);
         }
     }, [authResponse?.isSuccess]);
 
