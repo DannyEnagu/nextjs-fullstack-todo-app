@@ -1,6 +1,17 @@
 # Fullstack Todo App with Next.js
 
-Building a full-stack todo web with React/Next to practice all I have learnt for June.
+Build a full-stack todo web with React/Next to practice all I have learnt for June.
+
+## Overview
+
+## The Challenge
+
+Users should be able to:
+    - Create a new account and login to view tasks
+    - Create a new todo
+    - View all created tasks
+    - Update todo by marking it as completed or important
+    - Filter tasks by state (i.e completed or starred)
 
 ## Features
 
@@ -20,8 +31,9 @@ Building a full-stack todo web with React/Next to practice all I have learnt for
 - [https://next-auth.js.org/](NextAuth.js for authentication)
 - [https://www.typescriptlang.org/](TypeScript as the programming language)
 - [http://vercel.com/](Vercel for deployment)
+- [https://tailwindcss.com/](TailwindCSS for styling)
 
-view the complete list of front-end dependencies in the corresponding package.json.
+view the complete list of front-end dependencies in the corresponding [package.json](https://github.com/DannyEnagu/nextjs-fullstack-todo-app/blob/main/package.json).
 
 ## Prerequisites
 
@@ -60,6 +72,18 @@ vercel env pull .env
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Live Demo
+
+[Live](https://nextjs-fullstack-todo-app.vercel.app)
+
+## Continued development
+
+- Animations
+- Filter todo by today and current week
+- Display current authenticated user profile
+- Add logout button
+- Add more authentication methods - GitHub, Google etc.
 
 ## Author
 

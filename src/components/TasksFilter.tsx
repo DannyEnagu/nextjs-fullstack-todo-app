@@ -14,6 +14,7 @@ export default function TasksFilter({children, filter }: FilterButtonProps) {
     const { closeMenu, changeFilter } = useContext(AppContext);
 
     const toggleActiveState = (e: MouseEvent<HTMLButtonElement>) => {
+        // Set the active state of the filter button
         const filters = document.querySelectorAll('[data-filter]');
         filters.forEach((btn, i) => {
             if (btn.getAttribute('data-filter') === filter) {
@@ -22,7 +23,9 @@ export default function TasksFilter({children, filter }: FilterButtonProps) {
                 btn.classList.remove('active')
             }
         });
+        // Change the filter option
         changeFilter(filter);
+        // Close the menu on mobile devices
         closeMenu();
     };
     return (

@@ -18,10 +18,12 @@ export default function AppContextProvider({
     }>) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [filter, setFilter] = useState<Filters>('all');
+
     const openMenu = () => setIsMenuOpen(true);
     const closeMenu = () => setIsMenuOpen(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen); 
     const changeFilter = (newFilter: Filters) => setFilter(newFilter);
+    
     return (
         <AppContext.Provider value={{
             filter,

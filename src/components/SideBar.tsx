@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function SideBar () {
     const { isMenuOpen } = useContext(AppContext);
+    
     return (
         <nav className={cn('hidden md:block bg-white dark:bg-[#18181c] rounded-2xl p-6',
             isMenuOpen ? 'block' : ''

@@ -16,14 +16,17 @@ export default function TaskItem ({
     title, id, isCompleted, isStarred, onUpdated
 }: TaskProps) {
     const handleStarring = () => {
+        // Update the task's starred status
         onUpdated && onUpdated(id, 'isStarred');
         starTask(id, !isStarred);
     }
     const handleCompletion = () => {
+        // Update the task's completion status
         onUpdated && onUpdated(id, 'isCompleted');
         checkTask(id, !isCompleted);
     }
     const handleDeletion = () => {
+        // Delete the task
         onUpdated && onUpdated(id, 'isDeleted');
         deleteTask(id);
     }

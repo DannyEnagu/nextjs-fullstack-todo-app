@@ -11,15 +11,18 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
     const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
 
     const handleTaskUpdate = (id: Task['id'], property: Property) => {
+        // Update the task property
         if (property === 'isDeleted') {
             // Remove the task from the list
             setFilteredTasks(filteredTasks.filter(task => task.id !== id));
         } else {
-            // Update the task property
-            setFilteredTasks(filteredTasks.map((task, i) => {
+            // Mark the task as completed or starred
+            setFilteredTasks(filteredTasks.map((task) => {
                 if (task.id === id && property === 'isCompleted') {
+                    // Toggle the task's completion status
                     task[property] = !task[property];
                 } else if (task.id === id && property === 'isStarred') {
+                    // Toggle the task's starred status
                     task[property] = !task[property];
                 }
                 return task;
