@@ -24,14 +24,14 @@ Users should be able to:
 
 ## Dependencies
 
-- [https://nextjs.org/](Next.js as the React framework)
-- [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](Next.js server actions and mutations for database manipulations)
-- [https://prisma.io/](Prisma as the ORM for migrations and database access)
-- [https://vercel.com/storage/postgres](Vercel Postgres as the database)
-- [https://next-auth.js.org/](NextAuth.js for authentication)
-- [https://www.typescriptlang.org/](TypeScript as the programming language)
-- [http://vercel.com/](Vercel for deployment)
-- [https://tailwindcss.com/](TailwindCSS for styling)
+- [Next.js as the React framework](https://nextjs.org/)
+- [Next.js server actions and mutations for database manipulations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [Prisma as the ORM for migrations and database access](https://prisma.io/)
+- [Vercel Postgres as the database](https://vercel.com/storage/postgres)
+- [NextAuth.js for authentication](https://next-auth.js.org/)
+- [TypeScript as the programming language](https://www.typescriptlang.org/)
+- [Vercel for deployment](http://vercel.com/)
+- [TailwindCSS for styling](https://tailwindcss.com/)
 
 view the complete list of front-end dependencies in the corresponding [package.json](https://github.com/DannyEnagu/nextjs-fullstack-todo-app/blob/main/package.json).
 
