@@ -9,9 +9,11 @@ import { createTask, userSession } from "@/lib/actions";
 export default function AddForm() {
     const [adding, setAdding] = useState(false);
     const [title, setTitle] = useState('' as string);
+
     const addTask = async (formDate: FormData) => {
         setAdding(true);
         const title = formDate.get('title');
+        
         if (title !== '') {
             const session = await userSession(); 
             await createTask({ title: title as string, userId: session?.user?.id as string});

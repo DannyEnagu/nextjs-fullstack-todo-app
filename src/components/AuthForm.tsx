@@ -17,14 +17,17 @@ export default function AuthForm() {
 
     
     const toggleAuthType = (e: React.MouseEvent) => {
+        // Prevent the default form submission
         e.preventDefault();
         setAuthType(authType === 'signIn' ? 'signUp' : 'signIn');
     }
+
     const handleSubmit = async (formData: FormData) => {
         setIsLoading(true);
         const email = formData.get('email');
         const password = formData.get('password');
         const res = await authenticateUser(authType,{ email, password });
+
         setAuthResponse(prev => ({ ...prev, ...res }));
     }
 

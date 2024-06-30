@@ -2,9 +2,12 @@ import prisma from "@/lib/prisma";
 import { userSession } from "./actions";
 
 export const getAllTasks = async () => {
+    // Get all tasks for the current user 
     const session = await userSession();
     if (!session?.user?.id) return;
+
     try {
+        // Get the newest task only
         const newestTasks = await prisma.todo.findMany({
             where: {
               userId: session.user.id
@@ -14,6 +17,7 @@ export const getAllTasks = async () => {
             },
             take: 1
         });
+        // Get the completed tasks only
         const completedTasks = await prisma.todo.findMany({
             where: {
               userId: session.user.id,
@@ -26,7 +30,7 @@ export const getAllTasks = async () => {
               updatedAt: 'desc'
             }
           });
-          
+          // Get the starred and incomplete tasks
           const starredInCompleteTasks = await prisma.todo.findMany({
             where: {
               userId: session.user.id,
@@ -40,7 +44,7 @@ export const getAllTasks = async () => {
               updatedAt: 'desc'
             }
           });
-          
+          // Get the other incomplete tasks
           const otherIncompleteTasks = await prisma.todo.findMany({
             where: {
               userId: session.user.id,
@@ -54,6 +58,11 @@ export const getAllTasks = async () => {
               updatedAt: 'desc'
             }
           });
+          // Return:
+            // the newest task,
+            // starred and incomplete tasks,
+            // other incomplete tasks, and
+            // completed tasks last
           return [
             newestTasks[0],
             ...starredInCompleteTasks,

@@ -24,24 +24,28 @@ export const { auth, signIn, signOut } = NextAuth({
           password: { label: 'Password', type: 'password' },
         },
         authorize: async (credentials) => {
+          // Validate the credentials
           const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
           
           if (parsedCredentials.success) {
+            // Get the user
             const { email, password } = parsedCredentials.data;
             const user = await getUser(email);
             
             if (!user) {
+              // If the user is not found, return null
               return null;
             };
 
             const isValidPassword = await bcrypt.compare(password, user.password);
             if (isValidPassword) {
+              // If the credentials are valid, return the user
               return user;
             }
           }
-
+          // If the credentials are invalid, return null
           return null;
         },
   }),],

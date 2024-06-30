@@ -11,12 +11,14 @@ export default function Header () {
     const pathname = usePathname();
     const {isMenuOpen, toggleMenu} = useContext(AppContext);
     const openOrCloseMenu = () => toggleMenu();
+
     return (
         <header className="flex justify-between items-center">
             <div className="dark:text-[#dfe0fb] text-3xl font-bold">
                 <span>to</span>
                 <span className="text-rose-400 dark:text-indigo-500">do.</span>
             </div>
+            {/* Hide Hamburger icon on auth page */}
             <div className={`md:hidden ${pathname === '/auth' ? 'hidden': ''}`}>
                 <Button
                     variant='ghost'
