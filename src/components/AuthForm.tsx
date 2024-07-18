@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { authenticateUser, userSession } from '@/lib/actions';
+import { authenticateUser } from '@/lib/actions';
 import { LoaderCircle } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -27,15 +27,13 @@ export default function AuthForm() {
         const email = formData.get('email');
         const password = formData.get('password');
         const res = await authenticateUser(authType,{ email, password });
-
         setAuthResponse(prev => ({ ...prev, ...res }));
+        setIsLoading(false);
     }
 
     useEffect(() => {
         if (authResponse?.isSuccess) {
             redirect('/');
-        } else {
-            setIsLoading(false);
         }
     }, [authResponse?.isSuccess]);
 
