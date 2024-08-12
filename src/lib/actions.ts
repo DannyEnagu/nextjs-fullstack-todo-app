@@ -93,7 +93,7 @@ export const signUp = async (data: { email: FormDataEntryValue | null; password:
 
 export async function authenticateUser(
     authType: 'signIn' | 'signUp',
-    data: { email: FormDataEntryValue | null; password: FormDataEntryValue | null },
+    data: { email: string | null; password: string | null },
   ) {
     // Authenticate the user
     try {

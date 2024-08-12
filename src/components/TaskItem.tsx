@@ -40,12 +40,13 @@ export default function TaskItem ({
                 className="border border-rose-400 dark:border-indigo-500 data-[state=checked]:bg-rose-400 dark:data-[state=checked]:bg-indigo-500"
                 onCheckedChange={handleCompletion}
             />
-            <span className={`text-sm ${isCompleted ? 'line-through' : ''}`}>{title}</span>
-            <span className="ml-auto flex gap-2">
+            <div className={`text-sm ${isCompleted ? 'line-through' : ''}`}>{title}</div>
+            <div className="ml-auto flex gap-2">
                 <Button
                     variant='ghost'
                     size='icon'
                     className="text-gray-400  h-5 w-5"
+                    data-testid="star-button"
                     onClick={handleStarring}
                 >
                     <Star size={16} className={`${isStarred ? 'text-rose-400 dark:text-indigo-500 fill-rose-400 dark:fill-indigo-500': ''}`} />
@@ -54,11 +55,12 @@ export default function TaskItem ({
                     variant='ghost'
                     size='icon'
                     className="text-red-400 h-5 w-5"
+                    data-testid="delete-button"
                     onClick={handleDeletion}
                 >
                     <Trash2 size={16} />
                 </Button>
-            </span>
+            </div>
         </li>
     );
 }

@@ -1,12 +1,14 @@
 'use client';
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import AddForm from "./AddFrom";
+import { useContext, useEffect, useState } from "react";
+import AddForm from "./AddForm";
 import { AppContext } from "@/lib/AppContext";
 import TaskItem from "./TaskItem";
 import { Task, Property } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { createTask, userSession } from "@/lib/actions";
 
 export default function TasksList ({ tasks }: { tasks: Task[] }) {
+    const [adding, setAdding] = useState(false);
     const { isMenuOpen, filter } = useContext(AppContext);
     const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
 
@@ -47,8 +49,20 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
             id={id}
             isCompleted={isCompleted}
             isStarred={isStarred}
-            onUpdated={(tid, props) => handleTaskUpdate(tid, props)}
+            onUpdated={(TaskId, props) => handleTaskUpdate(TaskId, props)}
         />));
+
+    const handleAddTask = async (title: string) => {
+        setAdding(true);
+        try {
+            const session = await userSession(); 
+            await createTask({ title: title as string, userId: session?.user?.id as string});
+        } catch (error) {
+            console.error(error);
+        }
+        setAdding(false);
+    };
+
 
     return (
         <section className={cn('md:block bg-white dark:bg-[#18181c] rounded-2xl p-6',
@@ -61,9 +75,8 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
                 {tasksList.length === 0 && <p className="text-gray-500 text-center">No tasks found</p>}
                 {tasksList.length > 0 && <ul className="max-h-96 overflow-auto">
                         {tasksList}
-                    </ul>
-                }
-                <AddForm />
+                    </ul>}
+                <AddForm addTask={handleAddTask} isAdding={adding} />
             </div>
         </section>
     );

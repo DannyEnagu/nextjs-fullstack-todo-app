@@ -1,12 +1,14 @@
-import Header from "@/components/Header";
-import AuthForm from "@/components/AuthForm";
+import AuthWrapper from "@/components/AuthWapper";
+import WithHeader from "@/components/WithHeader";
+
 
 export default function AuthPage() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between pt-8 md:pt-20">
             <div className="container">
-                <Header />
-                <AuthForm />
+                <WithHeader>
+                    <AuthWrapper />
+                </WithHeader>
             </div>
         </main>
     );
