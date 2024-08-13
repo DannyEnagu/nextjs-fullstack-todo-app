@@ -57,10 +57,11 @@ export const createTask = async (data: { title: Task['title'], description?: Tas
     // Create a new task only if the title and user ID are provided
     try {
         if (!data.title || !data.userId) return;
-        await prisma.todo.create({
+        const task = await prisma.todo.create({
             data
         });
         revalidatePath('/');
+        return task;
     } catch (error) {
         console.error(error);
     }

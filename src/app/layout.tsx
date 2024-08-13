@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
 import "@/styles/globals.css";
 import App from "next/app";
-import AppContextProvider from "@/lib/AppContext";
+import AppProvider from "@/lib/AppProvider";
 
 const lexendDeca = Lexend_Deca({
   subsets: ['latin'],
@@ -20,12 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AppContextProvider>
+    <AppProvider>
       <html lang="en">
         <body className={`${lexendDeca.className} dark:bg-[#121215] bg-slate-100 text-[#84849d]`}>
           {children}
         </body>
       </html>
-    </AppContextProvider>
+    </AppProvider>
   );
 }

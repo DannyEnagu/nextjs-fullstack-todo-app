@@ -1,33 +1,28 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Star, Trash2 } from "lucide-react";
-import { Property, Task } from "@/lib/types";
+import { Task } from "@/lib/types";
 import { checkTask, deleteTask, starTask } from "@/lib/actions";
+import useAppState from "@/lib/useAppState";
 
-interface TaskProps {
-    title: Task['title'];
-    id: Task['id'];
-    isCompleted: boolean;
-    isStarred: boolean;
-    onUpdated?: (id: Task['id'], props: Property) => void;
-}
-
-export default function TaskItem ({
-    title, id, isCompleted, isStarred, onUpdated
-}: TaskProps) {
+export default function TaskItem (task: Task) {
+    const {id, title, isCompleted, isStarred} = task;
+    const {updateTask, removeTask} = useAppState();
+    
     const handleStarring = () => {
         // Update the task's starred status
-        onUpdated && onUpdated(id, 'isStarred');
-        starTask(id, !isStarred);
+        updateTask({...task, isStarred: !isStarred});
+        starTask(task.id, !isStarred);
     }
     const handleCompletion = () => {
         // Update the task's completion status
-        onUpdated && onUpdated(id, 'isCompleted');
+        updateTask({...task, isCompleted: !isCompleted});
         checkTask(id, !isCompleted);
     }
     const handleDeletion = () => {
         // Delete the task
-        onUpdated && onUpdated(id, 'isDeleted');
+        removeTask(id);
         deleteTask(id);
     }
 

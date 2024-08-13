@@ -1,15 +1,15 @@
 'use client'
 import { useContext } from "react";
-import { AppContext } from "@/lib/AppContext";
+import { AppContext } from "@/lib/AppProvider";
 import Header from "./Header";
 
 
 export default function WithHeader({ children } : { children: React.ReactNode }) {
     const {isMenuOpen, toggleMenu} = useContext(AppContext);
-    const openOrCloseMenu = () => toggleMenu();
+    // const openOrCloseMenu = () => toggleMenu();
     return (
         <div>
-            <Header isMenuOpen={isMenuOpen} toggleMenu={openOrCloseMenu} />
+            <Header isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
             {children}
         </div>
     );

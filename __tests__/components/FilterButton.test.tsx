@@ -6,26 +6,28 @@ import userEvent from '@testing-library/user-event';
 describe('<TasksFilter />', () => {
     const onMockClick = vi.fn();
 
-    const renderComponent = () => {
-        render(<TasksFilter onClick={onMockClick}>{'all'}</TasksFilter>);
+    const renderComponent = (buttonText: string, isActive: boolean) => {
+        render(<TasksFilter onClick={onMockClick} isActive={isActive}>{buttonText}</TasksFilter>);
     }
 
     it('should render a button with the correct text', () => {
-        renderComponent();
+        renderComponent('All', false);
 
         const button = screen.getByRole('button', { name: /all/i });
 
         expect(button).toBeInTheDocument();
+        expect(button).not.toHaveClass('active');
     });
 
     it('should call the onClick function when clicked', async () => {
-        renderComponent();
+        renderComponent('Starred', true);
 
-        const button = screen.getByRole('button', { name: /all/i });
+        const button = screen.getByRole('button', { name: /starred/i });
 
         const user = userEvent.setup();
         await user.click(button);
 
         expect(onMockClick).toHaveBeenCalled();
+        expect(button).toHaveClass('active');
     });
 });

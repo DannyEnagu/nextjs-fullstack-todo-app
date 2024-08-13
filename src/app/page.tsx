@@ -1,14 +1,14 @@
 import { Suspense } from "react";
 import SideBar from "@/components/SideBar";
-import TasksList from "@/components/TaskList";
-import { getAllTasks } from "@/lib/data";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import WithHeader from "@/components/WithHeader";
+import { getAllTasks } from "@/lib/data";
+import TasksList from "@/components/TaskList";
 
 export default async function Home() {
-  const tasks = await getAllTasks() || [];
   const session = await auth();
+  const tasks = await getAllTasks() || [];
   if (!session?.user?.id) {
     redirect('/auth');
   }

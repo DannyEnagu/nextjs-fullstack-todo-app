@@ -1,62 +1,41 @@
 'use client';
 import { useContext, useEffect, useState } from "react";
 import AddForm from "./AddForm";
-import { AppContext } from "@/lib/AppContext";
+import { AppContext } from "@/lib/AppProvider";
 import TaskItem from "./TaskItem";
-import { Task, Property } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { createTask, userSession } from "@/lib/actions";
+import { Loader } from "lucide-react";
+import { Task } from "@/lib/types";
 
-export default function TasksList ({ tasks }: { tasks: Task[] }) {
+interface TaskListProps {
+    tasks: Task[];
+}
+
+export default function TasksList ({ tasks }: TaskListProps) {
+    const [isLoading, setIsLoading] = useState(true);
     const [adding, setAdding] = useState(false);
-    const { isMenuOpen, filter } = useContext(AppContext);
-    const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
-
-    const handleTaskUpdate = (id: Task['id'], property: Property) => {
-        // Update the task property
-        if (property === 'isDeleted') {
-            // Remove the task from the list
-            setFilteredTasks(filteredTasks.filter(task => task.id !== id));
-        } else {
-            // Mark the task as completed or starred
-            setFilteredTasks(filteredTasks.map((task) => {
-                if (task.id === id && property === 'isCompleted') {
-                    // Toggle the task's completion status
-                    task[property] = !task[property];
-                } else if (task.id === id && property === 'isStarred') {
-                    // Toggle the task's starred status
-                    task[property] = !task[property];
-                }
-                return task;
-            }));
-        }
-    };
+    const { isMenuOpen, tasks: taskList, addTask, setTasks } = useContext(AppContext);
 
     useEffect(() => {
-        setFilteredTasks(tasks.filter(task => {
-            if (filter === 'all') return true;
-            if (filter === 'completed') return task.isCompleted;
-            if (filter === 'starred') return task.isStarred;
-            
-            return false;
-        }));
-    }, [tasks, filter]);
+        if (tasks.length === 0) return;
+        setTasks(tasks);
+        setIsLoading(false);
+    }, [tasks, setTasks]);
 
-    const tasksList = filteredTasks.map(({title, id, isCompleted, isStarred}) => (
+    const taskItems = taskList.map((task) => (
         <TaskItem
-            key={title + id}
-            title={title}
-            id={id}
-            isCompleted={isCompleted}
-            isStarred={isStarred}
-            onUpdated={(TaskId, props) => handleTaskUpdate(TaskId, props)}
+            key={task.title + task.id}
+            {...task}
         />));
 
     const handleAddTask = async (title: string) => {
         setAdding(true);
         try {
             const session = await userSession(); 
-            await createTask({ title: title as string, userId: session?.user?.id as string});
+            const task = await createTask({ title: title as string, userId: session?.user?.id as string});
+            
+            if (task) addTask(task);
         } catch (error) {
             console.error(error);
         }
@@ -72,9 +51,12 @@ export default function TasksList ({ tasks }: { tasks: Task[] }) {
                 <h2 className="flex justify-between items-center text-rose-400 dark:text-indigo-500 font-bold text-lg mb-4">
                     <span>Tasks</span>
                 </h2>
-                {tasksList.length === 0 && <p className="text-gray-500 text-center">No tasks found</p>}
-                {tasksList.length > 0 && <ul className="max-h-96 overflow-auto">
-                        {tasksList}
+                {isLoading
+                    ? <p className="flex justify-center items-center text-gray-500"><Loader /></p>
+                    : tasks.length === 0
+                        ? <p className="text-gray-500 text-center">No tasks found</p>
+                        : <ul className="max-h-96 overflow-auto">
+                        {taskItems}
                     </ul>}
                 <AddForm addTask={handleAddTask} isAdding={adding} />
             </div>
