@@ -28,8 +28,8 @@ describe('<TaskList />', () => {
             updatedAt: new Date(),
         },
         {
-            id: '2',
-            title: 'Task 2',
+            id: '3',
+            title: 'Task 3',
             isCompleted: true,
             description: 'Description 2',
             isStarred: true,
@@ -47,17 +47,21 @@ describe('<TaskList />', () => {
         );
     }
 
-    it('should render an empty list when no tasks are provided', () => {
+    it('should render "no task" if the task list is empty', () => {
         render(<TaskList tasks={[]} />);
 
-        const emptyList = screen.getByText(/no tasks/i);
-        expect(emptyList).toBeInTheDocument();
+        const noTask = screen.getByText(/no task/i)
+
+        expect(noTask).toBeInTheDocument()
     });
     
     it('should render a list of tasks', () => {
         renderComponent();
 
-        const taskItems =screen.getAllByRole('listitem');
+        const taskItems = screen.getAllByRole('listitem');
+        const taskList  = screen.getByTestId('task-list')
+
         expect(taskItems).toHaveLength(3);
+        expect(taskList).toBeInTheDocument()
     });
 });
