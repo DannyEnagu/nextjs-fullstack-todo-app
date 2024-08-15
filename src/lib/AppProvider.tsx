@@ -56,7 +56,10 @@ export default function AppProvider({
 
     // Task related functions
     const setTasks = (tasks: Task[]) => setTaskList(tasks);
-    const addTask = (task: Task) => setTaskList([...taskList, task]);
+    const addTask = (task: Task) => setTaskList([task, ...taskList]);
+    // Todo: Move newly updated task around
+    // 1. Move completed task to the bottom of the list
+    // 2. Move Starred task to the top of the list
     const updateTask = (task: Task) => setTaskList(taskList.map(t => t.id === task.id ? task : t));
     const removeTask = (id: string) => setTaskList(taskList.filter(task => task.id !== id));
     

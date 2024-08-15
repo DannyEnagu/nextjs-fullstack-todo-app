@@ -3,12 +3,10 @@ import SideBar from "@/components/SideBar";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import WithHeader from "@/components/WithHeader";
-import { getAllTasks } from "@/lib/data";
 import TasksList from "@/components/TaskList";
 
 export default async function Home() {
   const session = await auth();
-  const tasks = await getAllTasks() || [];
   if (!session?.user?.id) {
     redirect('/auth');
   }
@@ -19,7 +17,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-[250px_minmax(400px,_1fr)] gap-4 mt-8">
                   <SideBar />
                   <Suspense fallback={<div>Loading...</div>}>
-                    <TasksList tasks={tasks} />
+                    <TasksList />
                   </Suspense>
             </div>
           </WithHeader>

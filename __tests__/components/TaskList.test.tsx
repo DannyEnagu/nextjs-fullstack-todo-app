@@ -6,49 +6,16 @@ import AppProvider from '@/lib/AppProvider';
 
 describe('<TaskList />', () => {
 
-    const tasks: Task[] = [
-        {
-            id: '1',
-            title: 'Task 1',
-            isCompleted: false,
-            description: 'Description 1',
-            isStarred: false,
-            userId: '1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            id: '2',
-            title: 'Task 2',
-            isCompleted: true,
-            description: 'Description 2',
-            isStarred: false,
-            userId: '1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            id: '3',
-            title: 'Task 3',
-            isCompleted: true,
-            description: 'Description 2',
-            isStarred: true,
-            userId: '1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-    ];
-
     const renderComponent = () => {
         render(
             <AppProvider>
-                <TaskList tasks={tasks} />
+                <TaskList />
             </AppProvider>
         );
     }
 
     it('should render "no task" if the task list is empty', () => {
-        render(<TaskList tasks={[]} />);
+        renderComponent()
 
         const noTask = screen.getByText(/no task/i)
 

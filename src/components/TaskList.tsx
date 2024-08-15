@@ -6,22 +6,29 @@ import TaskItem from "./TaskItem";
 import { cn } from "@/lib/utils";
 import { createTask, userSession } from "@/lib/actions";
 import { Loader } from "lucide-react";
-import { Task } from "@/lib/types";
+import { getAllTasks } from "@/lib/actions";
 
-interface TaskListProps {
-    tasks: Task[];
-}
-
-export default function TasksList ({ tasks }: TaskListProps) {
+export default function TasksList () {
+    const [isLoading, setIsLoading] = useState(true);
     const [adding, setAdding] = useState(false);
-    const { isMenuOpen, tasks: taskList, addTask, setTasks } = useContext(AppContext);
+    const { isMenuOpen, tasks, addTask, setTasks } = useContext(AppContext);
 
     useEffect(() => {
-        if (tasks.length === 0) return;
-        setTasks(tasks);
-    }, [tasks, setTasks]);
+        async function fetchTasks() {
+            const DBTasks = await getAllTasks() || [];
+            if (DBTasks.length === 0) return;
+            setTasks([...DBTasks]);
+            setIsLoading(false);
+        }
 
-    const taskItems = taskList.map((task) => (
+        fetchTasks();
+    }, [])
+
+    // useEffect(() => {
+    //     if (tasks.length === 0) return;
+    // }, [tasks, setTasks]);
+
+    const taskItems = tasks.map((task) => (
         <TaskItem
             key={task.title + task.id}
             {...task}
@@ -34,10 +41,11 @@ export default function TasksList ({ tasks }: TaskListProps) {
             const task = await createTask({ title: title as string, userId: session?.user?.id as string});
             
             if (task) addTask(task);
+            setAdding(false);
         } catch (error) {
             console.error(error);
+            setAdding(false);
         }
-        setAdding(false);
     };
 
 
@@ -49,11 +57,13 @@ export default function TasksList ({ tasks }: TaskListProps) {
                 <h2 className="flex justify-between items-center text-rose-400 dark:text-indigo-500 font-bold text-lg mb-4">
                     <span>Tasks</span>
                 </h2>
-                {tasks.length === 0
-                    ? <p className="text-gray-500 text-center">No tasks found</p>
-                    : <ul data-testid="task-list" className="max-h-96 overflow-auto">
-                    {taskItems}
-                </ul>}
+                {isLoading
+                    ? <p className="flex justify-center items-center text-gray-500"><Loader /></p>
+                    : tasks.length === 0
+                        ? <p className="text-gray-500 text-center">No tasks found</p>
+                        : <ul className="max-h-96 overflow-auto">
+                        {taskItems}
+                    </ul>}
                 <AddForm addTask={handleAddTask} isAdding={adding} />
             </div>
         </section>
