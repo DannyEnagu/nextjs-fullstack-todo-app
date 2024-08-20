@@ -1,6 +1,12 @@
 import AuthWrapper from "@/components/AuthWapper";
 import WithHeader from "@/components/WithHeader";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Sign In | Sign Up",
+    description: "Authentication Page",
+};
 
 export default function AuthPage() {
     return (

@@ -34,7 +34,7 @@ export default function AddForm({addTask, isAdding} : AddFormProps) {
                 type="text"
                 name="title"
                 value={title}
-                placeholder="Start Typing.."
+                placeholder="Start Typing..."
                 className="bg-transparent dark:bg-transparent rounded-e-none"
                 onChange={e => setTitle(e.target.value)}
             />

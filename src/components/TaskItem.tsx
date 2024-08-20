@@ -28,6 +28,7 @@ export default function TaskItem (task: Task) {
 
     return (
         <li
+            data-testid="task-item"
             className="flex items-center gap-4 bg-[#d3dee3] dark:bg-neutral-800 px-4 py-3 rounded-md my-2"
         >
             <Checkbox
